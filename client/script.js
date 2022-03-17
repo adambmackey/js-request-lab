@@ -10,7 +10,7 @@
 */
 
 // CODE HERE
-
+let sayHelloButton = document.querySelector('#say-hello-button')
 
 // PROBLEM 2
 /*
@@ -20,8 +20,12 @@
 */
 
 // CODE HERE
-
-
+const helloBtnColor = (e) => {
+    sayHelloButton.style.backgroundColor = 'black'
+    sayHelloButton.style.color = 'white'
+    
+}
+sayHelloButton.addEventListener('mouseover', helloBtnColor)
 // PROBLEM 3
 /*
     Now you can see that the button colors change, but they do not change back when we take the mouse off of the button.
@@ -32,7 +36,11 @@
 */
 
 // CODE HERE
-
+const helloBtnBack = (e) => {
+    sayHelloButton.style.backgroundColor = '#EFEFEF'
+    sayHelloButton.style.color = 'black'
+}
+sayHelloButton.addEventListener('mouseout', helloBtnBack)
 
 // PROBLEM 4
 /*
@@ -53,7 +61,7 @@ const sayHello = () => {
 // DO NOT EDIT FUNCTION
 
 // CODE HERE
-
+sayHelloButton.addEventListener('click', sayHello)
 
 // PROBLEM 5 
 /*
@@ -65,13 +73,25 @@ const sayHello = () => {
     
     Handle the promise that's returned with a .then, which you should pass a callback function to. Inside the callback function, console.log the response's data (in the intermediate instructions we'll come back to this function and add HTML).
 */ 
+const baseURL = 'http://localhost:3000/animals'
 
 const ohMy = () => {
     // YOUR CODE HERE
+    axios.get(`${baseURL}`)
+    .then(res => {
+    for(let i = 0;i < res.data.length;i++){
+        document.createNewElement('p', res.data[i])
+        p.textContent = res.data[i]
+        p.appendChild(document.createTextNode(res.data[i]))
+    }
+    })
 }
 
 document.getElementById('animals-button').addEventListener('click', ohMy)
 
+// Back in the ohMy function on Problem 5, replace the console log in the promise's callback with a for loop that loops over res.data. 
+
+//     On each iteration of the loop, create a new p element. Set its textContent equal the string at the current index (i) and then append the new p element onto the document's body. 
 
 // PROBLEM 6 
 /*
@@ -85,10 +105,17 @@ document.getElementById('animals-button').addEventListener('click', ohMy)
     
     We'll be updating this function in the next problem.
 */
+const secondURL = 'http://localhost:3000/repeat/{SOMEPARAM}'
 
 const repeatMyParam = () => {
     //YOUR CODE HERE
+    axios.get(`'http://localhost:3000/repeat/{req}'`)
+    .then(res => {
+console.log(res.data)
+document.getElementById('repeat-text').textContent = res.data
+    })
 }
+document.getElementById('repeat-button').addEventListener('click',repeatMyParam)
 
 // PROBLEM 7
 /*
@@ -111,8 +138,13 @@ const repeatMyParam = () => {
 */
 
 // CODE HERE
-
-
+const queryTest = (e) => {
+    axios.get('http://localhost:3000/query-test/?test')
+    .then(res => {
+        console.log(res.data)
+    })
+}
+document.getElementById('query-button').addEventListener('click', queryTest)
 
 ////////////////
 //INTERMEDIATE//
